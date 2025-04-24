@@ -38,6 +38,14 @@ I am CG Venkatesh Raju, a passionate technologist with deep expertise in Embedde
    -
    - [OpenSource Monitoring Integrations](#-OMI)
 
+[8.Project Overview](#Project-Overview)
+   -
+   - [Database Design Overview](#DBinfo)
+   - [AI Forecasting Engine](#rcipredict)
+   - [Modular Microservice Architecture](#microarch)
+   - [RAG + Agent-Driven Intelligence](#RAG)
+   - [Deployment & Service Management](#deploy)
+   - [API Documentation](#APIdocs)
 ---
 <iframe width="1236" height="695" src="https://www.youtube.com/embed/kn9JVdABxrg" title="ASSASSIN’S CREED SHADOWS Is Way Better Than I Expected (Full Gameplay)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -907,7 +915,93 @@ By implementing these features, data center operators can maximize operational e
 
 ---
 
+## 🧩 Project Overview {#Project-Overview}
 
+This section presents recent architectural and functional additions that significantly enhance the system's robustness, scalability, and real-time intelligence.
+
+
+---
+
+### 🗃️ Database Design Overview {#DBinfo}
+The platform relies on PostgreSQL, featuring dedicated tables for structured sensor and predictive data:
+
+| Table Name            | Description                                                                                  |
+|-----------------------|----------------------------------------------------------------------------------------------|
+| `sensor_data`         | Stores internal/external temperature, Ext.pressure, etc.                                         |
+| `additional_metrics`  | RCI scores, thresholds, anomalies, performance metrics                                       |
+| `thermal_sensor_data` | Thermal imaging data with min/max/avg temperature                                            |
+| `dust_sensor_data`    | Dust levels, ΔP (pressure drop), and fan RPM                                                 |
+| `predict_rci`         | Stores model predictions (ARIMA Future trends)                                                             |
+| `inference_results`   | Stores model predictions (LSTM Anomaly prediction, prophet Future Trends, Pearson matrix)    |
+| `Network_metrics_snapshots`| Stores Overall network & system informations                                            |
+
+
+---
+
+### 📈 AI Forecasting Engine {#rcipredict}
+We’ve implemented a robust multi-model forecasting setup using:
+
+- **ARIMA** – Used for RCI and internal temperature prediction.
+- `rci_predict.py` – Handles real-time inference for upcoming 5-minute intervals.
+
+- **LSTM** - Anomaly predictions for overall sensor data.
+- inference_service_api.py - infer the overall sensor data and provides anomaly status and anomaly confidence percentage.
+
+- **LSTM** & **Prophet** - infere overall sensor data health pattern and Predicts future trends for overall sensor data.
+- inference_service_api.py -  infer the overall sensor data and provides the current health trend patterns also predicts the future trends.
+
+---
+
+### 🧱 Modular Microservice Architecture {#microarch}
+The backend runs as modular FastAPI microservices:
+
+| Service Name             | Script Name                    
+|--------------------------|------------------------------
+| Inference API            | `inference_service_api.py   
+| DeepSeek RAG AI Engine   | `langchain_modules/main_app.py`              
+| ARIMA Prediction Service | `infer_arima.py`               
+| WebSocket Broadcaster    | `WAPI/main.py`                 
+| Bulk Data Handler        | `WAPI/bulk/main.py`
+| deep_handler_keyword     | `deep_handler.py`
+
+
+---
+
+### 🧠 RAG + Langchain Agent-Driven Intelligence {#RAG}
+The platform integrates LangChain and DeepSeek LLM agents to:
+
+- Generate structured health check reports.
+- Pull the latest sensor data directly from the PostgreSQL database.
+- Output `.docx` or markdown-based reports with smart interpretations.
+
+
+---
+
+### ⚙️ Deployment & Service Management {#deploy}
+Services are managed using:
+
+- `systemd` service files for each FastAPI or subscriber script.
+- Isolated virtual environments for runtime consistency.
+- Cron jobs for backups or task scheduling.
+
+---
+
+### 📚 API Documentation Overview{#APIdocs}
+Swagger-based auto-generated docs available at:
+
+```
+http://<your-server>:<port>/docs
+```
+
+Supports endpoints for:
+- Sensor data retrieval
+- Additional Sensor data metrics
+- Thermal image sensor data
+- Network metrics data
+- Future trend/Anomaly predict/corelation matrix data endpoint
+- Langchain LLM / RAG AI prompt inference endpoint
+- RCI prediction inference endpoint
+- AI-generated health report endpoint
 
 ---
 
