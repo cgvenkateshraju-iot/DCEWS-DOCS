@@ -46,8 +46,7 @@ I am CG Venkatesh Raju, a passionate technologist with deep expertise in Embedde
    - [RAG + Agent-Driven Intelligence](#RAG)
    - [Deployment & Service Management](#deploy)
    - [API Documentation](#APIdocs)
----
-<iframe width="1236" height="695" src="https://www.youtube.com/embed/kn9JVdABxrg" title="ASSASSIN’S CREED SHADOWS Is Way Better Than I Expected (Full Gameplay)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 ---
 
