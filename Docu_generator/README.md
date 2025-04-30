@@ -228,6 +228,9 @@ Manual Efforts and Low Automation: With little to no automation, IT managers mus
 ---
 ##  The MVP TestBed
 
+![Placeholder for Dust_probe](./images/Dust_probe.jpg)
+
+
 ---
 
 ## The Solution
